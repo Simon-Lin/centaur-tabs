@@ -206,20 +206,24 @@ When not specified, ELLIPSIS defaults to ‘...’."
 
 ;;; Keymaps
 ;;
-(defvar centaur-tabs-prefix-key [(control ?c)]
+(defvar centaur-tabs-prefix-key ["C-c t"]
   "The common prefix key used in Centaur-Tabs mode.")
 
 (defvar centaur-tabs-prefix-map
   (let ((km (make-sparse-keymap)))
-    (define-key km [(control left)]  'centaur-tabs-backward)
-    (define-key km [(control right)] 'centaur-tabs-forward)
-    (define-key km [(control up)]    'centaur-tabs-backward-group)
-    (define-key km [(control down)]  'centaur-tabs-forward-group)
-    (define-key km [(control f10)]   'centaur-tabs-local-mode)
+    (define-key km (kbd "<left>")  'centaur-tabs-backward)
+    (define-key km (kbd "<right>") 'centaur-tabs-forward)
+    (define-key km (kbd "<up>")    'centaur-tabs-backward-group)
+    (define-key km (kbd "<down>")  'centaur-tabs-forward-group)
+    (define-key km (kbd "f10")   'centaur-tabs-local-mode)
     (define-key km (kbd "C-5")     'centaur-tabs-extract-window-to-new-frame)
-    (define-key km [(control k)]   'centaur-tabs-kill-other-buffers-in-current-group)
-    (define-key km [(control o)]   'centaur-tabs-open-in-external-application)
-    (define-key km [(control d)]   'centaur-tabs-open-directory-in-external-application)
+    (define-key km (kbd "a")   'centaur-tabs-ace-jump)
+    (define-key km (kbd "s")   'centaur-tabs-counsel-switch-group)
+    (define-key km (kbd "p")   'centaur-tabs-group-by-projectile-project)
+    (define-key km (kbd "g")   'centaur-tabs-group-buffer-groups)
+    (define-key km (kbd "k")   'centaur-tabs-kill-all-buffers-in-current-group)
+    (define-key km (kbd "o")   'centaur-tabs-kill-other-buffers-in-current-group)
+    (define-key km (kbd "d")   'centaur-tabs-open-directory-in-external-application)
     km)
   "The key bindings provided in Centaur-Tabs mode.")
 
@@ -732,7 +736,7 @@ Call `centaur-tabs-tab-label-function' to obtain a label for TAB."
 	  'pointer centaur-tabs-mouse-pointer
 	  'help-echo buf-file-name
 	  'local-map centaur-tabs-default-map)))
-     
+
      ;; close button and/or modified marker
      (unless centaur-tabs-ace-jump-active
        (if centaur-tabs-set-close-button
@@ -870,7 +874,7 @@ template element."
        (propertize (centaur-tabs-button-tab centaur-tabs-new-tab-text)
                    'local-map centaur-tabs-new-tab-map
                    'help-echo "Create new tab")
-    "")))
+       "")))
 
 (defun centaur-tabs-line ()
   "Return the header line templates that represent the tab bar.
